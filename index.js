@@ -19,9 +19,25 @@ async function run() {
     await client.connect();
     const database = client.db("sdExpress");
     const texiTicketCollection = database.collection("texiTicket");
+    const boatTicketCollection = database.collection("boatTicket");
+    const motorBikeTicketCollection = database.collection("motorBikeTicket");
     app.get("/texiTicket", async (req, res) => {
       const query = {};
       const cursor = texiTicketCollection.find(query);
+      const result = await cursor.toArray();
+      res.json(result);
+    });
+    // called boat ticket get api
+    app.get("/boatTicket", async (req, res) => {
+      const query = {};
+      const cursor = boatTicketCollection.find(query);
+      const result = await cursor.toArray();
+      res.json(result);
+    });
+    // called motorbike ticket get api
+    app.get("/motorBikeTicket", async (req, res) => {
+      const query = {};
+      const cursor = motorBikeTicketCollection.find(query);
       const result = await cursor.toArray();
       res.json(result);
     });
@@ -33,7 +49,7 @@ app.get("/helo", (req, res) => {
   res.send("hello testing api");
 });
 app.get("/", (req, res) => {
-  res.send("Fly Earth server is runnig ");
+  res.send("sdExpress server is runnig ");
 });
 run().catch(console.dir);
 app.listen(port, () => {
